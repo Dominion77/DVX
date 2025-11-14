@@ -2,7 +2,8 @@
 
 import { useState } from 'react';
 import { FiSearch, FiShoppingCart, FiMenu, FiX } from 'react-icons/fi';
-import { FaFacebook, FaTwitter, FaInstagram, FaPinterest } from 'react-icons/fa';
+import { FaFacebook, FaInstagram, FaPinterest } from 'react-icons/fa';
+import { FaXTwitter } from "react-icons/fa6";
 import WalletConnect from './WalletConnect';
 import Link from 'next/link';
 
@@ -92,7 +93,7 @@ export default function Header({ onCartClick, cartItemCount }: HeaderProps) {
                 <FaFacebook className="w-5 h-5" />
               </a>
               <a href="#" className="hover:text-gray-300 transition-colors">
-                <FaTwitter className="w-5 h-5" />
+                <FaXTwitter className="w-5 h-5" />
               </a>
               <a href="#" className="hover:text-gray-300 transition-colors">
                 <FaInstagram className="w-5 h-5" />
@@ -116,7 +117,7 @@ export default function Header({ onCartClick, cartItemCount }: HeaderProps) {
                     <FaFacebook className="w-5 h-5" />
                   </a>
                   <a href="#" className="hover:text-gray-300 transition-colors">
-                    <FaTwitter className="w-5 h-5" />
+                    <FaXTwitter className="w-5 h-5" />
                   </a>
                   <a href="#" className="hover:text-gray-300 transition-colors">
                     <FaInstagram className="w-5 h-5" />

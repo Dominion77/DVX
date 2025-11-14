@@ -1,5 +1,8 @@
-import { FaFacebook, FaTwitter, FaInstagram, FaPinterest } from 'react-icons/fa';
+import { FaFacebook, FaInstagram, FaPinterest } from 'react-icons/fa';
+import { FaXTwitter } from "react-icons/fa6";
 import { FiMapPin, FiClipboard, FiShield, FiHelpCircle, FiTruck, FiCreditCard } from 'react-icons/fi';
+
+const presentYear = new Date().getFullYear();
 
 export default function Footer() {
   return (
@@ -83,7 +86,7 @@ export default function Footer() {
             <FaFacebook className="w-6 h-6" />
           </a>
           <a href="#" className="hover:text-gray-300 transition-colors">
-            <FaTwitter className="w-6 h-6" />
+            <FaXTwitter className="w-6 h-6" />
           </a>
           <a href="#" className="hover:text-gray-300 transition-colors">
             <FaInstagram className="w-6 h-6" />
@@ -95,7 +98,7 @@ export default function Footer() {
 
         {/* Copyright */}
         <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-500 text-sm">
-          <p>All Right Reserved © 2024, Lacozt</p>
+          <p>All Right Reserved © {presentYear}, Lacozt</p>
         </div>
       </div>
     </footer>

@@ -225,7 +225,7 @@ function ProductCard({ product, onAddToCart, viewMode }: {
             <p className="text-gray-600 mb-4">{product.description}</p>
             <div className="flex gap-2 mb-4">
               {product.tags.map(tag => (
-                <span key={tag} className="px-2 py-1 bg-pink-500 text-white text-xs rounded">
+                <span key={tag} className="px-2 py-1 bg-blue-900  text-white text-xs rounded">
                   {tag}
                 </span>
               ))}
@@ -279,7 +279,7 @@ function ProductCard({ product, onAddToCart, viewMode }: {
       <div className="p-4">
         <div className="flex gap-2 mb-2">
           {product.tags.map(tag => (
-            <span key={tag} className="px-2 py-1 bg-pink-500 text-white text-xs rounded">
+            <span key={tag} className="px-2 py-1 bg-blue-900 text-white text-xs rounded">
               {tag}
             </span>
           ))}
