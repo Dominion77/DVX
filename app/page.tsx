@@ -57,7 +57,7 @@ export default function Home() {
      
       <section 
         className="relative h-[450px] bg-cover bg-center"
-        style={{ backgroundImage: "url('/images/slider1.jpg')" }}
+        style={{ backgroundImage: "url('/images/landing.png')" }}
       >
         <div className="container mx-auto px-4 h-full flex items-center">
           <div className="max-w-md ml-auto animate-fade-in">

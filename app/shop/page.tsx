@@ -35,7 +35,6 @@ export default function Shop() {
       if (result.success) {
         let filteredProducts = result.data.products;
         
-        // Apply additional filters
         if (filters.inStock) {
           filteredProducts = filteredProducts.filter((p: Product) => p.inStock);
         }
@@ -148,13 +147,13 @@ export default function Shop() {
               <div className="flex items-center gap-2">
                 <button
                   onClick={() => setViewMode('grid')}
-                  className={`p-2 rounded ${viewMode === 'grid' ? 'bg-blue-500 text-white' : 'bg-gray-200'}`}
+                  className={`p-2 rounded ${viewMode === 'grid' ? 'bg-blue-900 text-white' : 'bg-gray-200'}`}
                 >
                   <FiGrid className="w-5 h-5" />
                 </button>
                 <button
                   onClick={() => setViewMode('list')}
-                  className={`p-2 rounded ${viewMode === 'list' ? 'bg-blue-500 text-white' : 'bg-gray-200'}`}
+                  className={`p-2 rounded ${viewMode === 'list' ? 'bg-blue-900 text-white' : 'bg-gray-200'}`}
                 >
                   <FiList className="w-5 h-5" />
                 </button>

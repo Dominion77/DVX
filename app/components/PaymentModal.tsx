@@ -5,6 +5,7 @@ import { useAccount, useWriteContract, useWaitForTransactionReceipt } from 'wagm
 import { USDC_CONTRACT, MERCHANT_WALLET, formatUSDCAmount } from '../lib/blockchain';
 import { CartItem } from '../types';
 import { FiX, FiCheck, FiAlertCircle } from 'react-icons/fi';
+import { generateOrderId } from '../lib/utils';
 
 interface PaymentModalProps {
   isOpen: boolean;
@@ -55,6 +56,8 @@ export default function PaymentModal({ isOpen, onClose, cartItems, totalAmount }
       }
     });
   };
+
+  
 
   const processOrder = async (txHash: string) => {
     try {
