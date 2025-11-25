@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { useAccount, useWriteContract, useWaitForTransactionReceipt } from 'wagmi';
-import { USDC_CONTRACT, MERCHANT_WALLET, formatUSDCAmount } from '../lib/blockchain';
+import { USDC_CONTRACT, MERCHANT_WALLET, formatUSDCAmount } from '../lib/wagmi';
 import { CartItem } from '../types';
 import { FiX, FiCheck, FiAlertCircle } from 'react-icons/fi';
 import { generateOrderId } from '../lib/utils';

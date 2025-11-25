@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { supabase } from '../../lib/supabase';
-import { validateWalletAddress } from '../../lib/blockchain';
+import { validateWalletAddress } from '../../lib/wagmi';
 import { ApiResponse, PaymentRequest, CartItem } from '../../types';
 
 export async function POST(request: NextRequest) {
@@ -59,7 +59,6 @@ export async function POST(request: NextRequest) {
       }
     }
 
-    // Get or create user
     const { data: user, error: userError } = await supabase
       .from('users')
       .select('id')

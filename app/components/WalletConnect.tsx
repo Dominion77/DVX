@@ -2,7 +2,7 @@
 
 import { useAccount, useConnect, useDisconnect, useBalance } from 'wagmi';
 import { FiLogOut, FiUser } from 'react-icons/fi';
-import { USDC_CONTRACT } from '../lib/blockchain';
+import { USDC_CONTRACT } from '../lib/wagmi';
 import { truncateAddress } from '../lib/utils';
 
 export default function WalletConnect() {

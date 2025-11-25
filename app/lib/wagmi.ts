@@ -49,7 +49,7 @@ export const USDC_CONTRACT = {
 export const MERCHANT_WALLET = process.env.NEXT_PUBLIC_MERCHANT_WALLET as `0x${string}`;
 
 export function formatUSDCAmount(amount: number): bigint {
-  return BigInt(Math.floor(amount * 1e6)); // USDC has 6 decimals
+  return BigInt(Math.floor(amount * 1e6));
 }
 
 export function parseUSDCAmount(amount: bigint): number {

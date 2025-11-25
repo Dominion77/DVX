@@ -1,7 +1,7 @@
 'use client';
 
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { config } from './lib/blockchain';
+import { config } from './lib/wagmi';
 import { WagmiProvider } from 'wagmi';
 
 const queryClient = new QueryClient();
