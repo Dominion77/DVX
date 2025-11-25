@@ -5,7 +5,9 @@ import { useAccount, useWriteContract, useWaitForTransactionReceipt } from 'wagm
 import { USDC_CONTRACT, MERCHANT_WALLET, formatUSDCAmount } from '../lib/wagmi';
 import { CartItem } from '../types';
 import { FiX, FiCheck, FiAlertCircle } from 'react-icons/fi';
+import { parseGwei } from 'viem';
 import { generateOrderId } from '../lib/utils';
+import { baseSepolia } from 'viem/chains';
 
 interface PaymentModalProps {
   isOpen: boolean;
@@ -38,14 +40,14 @@ export default function PaymentModal({ isOpen, onClose, cartItems, totalAmount }
       ...USDC_CONTRACT,
       functionName: 'transfer',
       args: [MERCHANT_WALLET, usdcAmount],
+      chainId: baseSepolia.id,
+      gasPrice: parseGwei("0.5"),
     }, {
       onSuccess: (hash) => {
         setTxHash(hash);
-        // Wait for transaction confirmation
         setTimeout(() => {
           if (isConfirmed) {
             setPaymentStep('success');
-            // Process order in backend
             processOrder(hash);
           }
         }, 2000);
