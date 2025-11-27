@@ -181,7 +181,7 @@ export default function PaymentModal({ isOpen, onClose, cartItems, totalAmount }
             <p className="text-gray-600 mb-4">Your order has been confirmed and will be processed shortly.</p>
             <button
               onClick={handleClose}
-              className="w-full bg-green-500 text-white py-3 rounded hover:bg-green-600 transition-colors"
+              className="w-full bg-black text-white py-3 rounded hover:bg-black transition-colors"
             >
               Continue Shopping
             </button>

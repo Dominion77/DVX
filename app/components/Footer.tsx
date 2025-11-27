@@ -95,7 +95,7 @@ export default function Footer() {
         </div>
 
         <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-500 text-sm">
-          <p>All Right Reserved © {presentYear}, Lacozt</p>
+          <p>All Right Reserved © {presentYear}, ZeroBase</p>
         </div>
       </div>
     </footer>

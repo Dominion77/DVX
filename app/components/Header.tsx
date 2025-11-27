@@ -2,17 +2,16 @@
 
 import { useState } from 'react';
 import { FiSearch, FiShoppingCart, FiMenu, FiX } from 'react-icons/fi';
-import { FaFacebook, FaInstagram, FaPinterest } from 'react-icons/fa';
-import { FaXTwitter } from "react-icons/fa6";
 import WalletConnect from './WalletConnect';
 import Link from 'next/link';
 
 interface HeaderProps {
   onCartClick: () => void;
   cartItemCount: number;
+  showNavBar?: boolean;
 }
 
-export default function Header({ onCartClick, cartItemCount }: HeaderProps) {
+export default function Header({ onCartClick, cartItemCount, showNavBar=true }: HeaderProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
@@ -20,7 +19,7 @@ export default function Header({ onCartClick, cartItemCount }: HeaderProps) {
       <header className="bg-white shadow-sm">
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
-            <h1 className="text-2xl font-bold tracking-wider">LACOZT</h1>
+            <h1 className="text-2xl font-bold tracking-wider">ZEROBASE</h1>
             
             
             <div className="hidden md:flex flex-1 max-w-md mx-8">
@@ -78,6 +77,7 @@ export default function Header({ onCartClick, cartItemCount }: HeaderProps) {
         </div>
       </header>
 
+    {showNavBar && ( 
       <nav className="bg-black text-white">
         <div className="container mx-auto px-4">
           <div className="hidden md:flex items-center justify-between py-4">
@@ -87,20 +87,6 @@ export default function Header({ onCartClick, cartItemCount }: HeaderProps) {
               <a href="#" className="hover:text-gray-300 transition-colors">Pages</a>
               <a href="/blog" className="hover:text-gray-300 transition-colors">Blog</a>
               <a href="#" className="hover:text-gray-300 transition-colors">Contact</a>
-            </div>
-            <div className="flex gap-4">
-              <a href="#" className="hover:text-gray-300 transition-colors">
-                <FaFacebook className="w-5 h-5" />
-              </a>
-              <a href="#" className="hover:text-gray-300 transition-colors">
-                <FaXTwitter className="w-5 h-5" />
-              </a>
-              <a href="#" className="hover:text-gray-300 transition-colors">
-                <FaInstagram className="w-5 h-5" />
-              </a>
-              <a href="#" className="hover:text-gray-300 transition-colors">
-                <FaPinterest className="w-5 h-5" />
-              </a>
             </div>
           </div>
 
@@ -112,25 +98,12 @@ export default function Header({ onCartClick, cartItemCount }: HeaderProps) {
                 <a href="#" className="hover:text-gray-300 transition-colors">Pages</a>
                 <a href="/blog" className="hover:text-gray-300 transition-colors">Blog</a>
                 <a href="#" className="hover:text-gray-300 transition-colors">Contact</a>
-                <div className="flex gap-4 pt-4">
-                  <a href="#" className="hover:text-gray-300 transition-colors">
-                    <FaFacebook className="w-5 h-5" />
-                  </a>
-                  <a href="#" className="hover:text-gray-300 transition-colors">
-                    <FaXTwitter className="w-5 h-5" />
-                  </a>
-                  <a href="#" className="hover:text-gray-300 transition-colors">
-                    <FaInstagram className="w-5 h-5" />
-                  </a>
-                  <a href="#" className="hover:text-gray-300 transition-colors">
-                    <FaPinterest className="w-5 h-5" />
-                  </a>
-                </div>
               </div>
             </div>
           )}
         </div>
       </nav>
+    )}
     </>
   );
 }

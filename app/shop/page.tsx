@@ -6,6 +6,9 @@ import Footer from '../components/Footer';
 import Cart from '../components/Cart';
 import { Product } from '../types';
 import { FiFilter, FiGrid, FiList } from 'react-icons/fi';
+import { BsBoxArrowLeft } from "react-icons/bs";
+import Link from 'next/link';
+
 
 export default function Shop() {
   const [isCartOpen, setIsCartOpen] = useState(false);
@@ -72,7 +75,15 @@ export default function Shop() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <Header onCartClick={() => setIsCartOpen(true)} cartItemCount={cartItemCount} />
+      <Header onCartClick={() => setIsCartOpen(true)} cartItemCount={cartItemCount} showNavBar={false} />
+
+      <Link
+            href="/"
+            className="inline-flex items-center mt-5 bg-gray-100 hover:bg-gray-200 text-primary-600 hover:text-primary-700 font-medium px-4 py-2 rounded-lg shadow-sm transition-all ml-10"
+          >
+            <BsBoxArrowLeft className="w-5 h-5 mr-2" />
+            Back to Home
+          </Link>
       
       <div className="container mx-auto px-4 py-8">
         <div className="flex flex-col lg:flex-row gap-8">
@@ -147,13 +158,13 @@ export default function Shop() {
               <div className="flex items-center gap-2">
                 <button
                   onClick={() => setViewMode('grid')}
-                  className={`p-2 rounded ${viewMode === 'grid' ? 'bg-blue-900 text-white' : 'bg-gray-200'}`}
+                  className={`p-2 rounded ${viewMode === 'grid' ? 'bg-black text-white' : 'bg-gray-200'}`}
                 >
                   <FiGrid className="w-5 h-5" />
                 </button>
                 <button
                   onClick={() => setViewMode('list')}
-                  className={`p-2 rounded ${viewMode === 'list' ? 'bg-blue-900 text-white' : 'bg-gray-200'}`}
+                  className={`p-2 rounded ${viewMode === 'list' ? 'bg-black text-white' : 'bg-gray-200'}`}
                 >
                   <FiList className="w-5 h-5" />
                 </button>
@@ -224,7 +235,7 @@ function ProductCard({ product, onAddToCart, viewMode }: {
             <p className="text-gray-600 mb-4">{product.description}</p>
             <div className="flex gap-2 mb-4">
               {product.tags.map(tag => (
-                <span key={tag} className="px-2 py-1 bg-blue-900  text-white text-xs rounded">
+                <span key={tag} className="px-2 py-1 bg-black  text-white text-xs rounded">
                   {tag}
                 </span>
               ))}
@@ -278,7 +289,7 @@ function ProductCard({ product, onAddToCart, viewMode }: {
       <div className="p-4">
         <div className="flex gap-2 mb-2">
           {product.tags.map(tag => (
-            <span key={tag} className="px-2 py-1 bg-blue-900 text-white text-xs rounded">
+            <span key={tag} className="px-2 py-1 bg-black text-white text-xs rounded">
               {tag}
             </span>
           ))}

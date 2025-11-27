@@ -79,8 +79,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Info Bar */}
-      <section className="bg-blue-900 text-white py-8 h-36">
+      <section className="bg-black text-white py-8 h-36">
         <div className="container mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
           <div className="flex flex-col items-center">
             <div className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center mb-2">
@@ -172,7 +171,7 @@ function ProductCard({ product, onAddToCart }: { product: Product; onAddToCart: 
       <div className="p-4">
         <div className="flex gap-2 mb-2">
           {product.tags.map(tag => (
-            <span key={tag} className="px-2 py-1 bg-blue-900 text-white text-xs rounded">
+            <span key={tag} className="px-2 py-1 bg-black text-white text-xs rounded">
               {tag}
             </span>
           ))}
