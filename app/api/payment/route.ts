@@ -7,7 +7,6 @@ export async function POST(request: NextRequest) {
   try {
     const { cartItems, totalAmount, userWallet, txHash }: PaymentRequest & { txHash: string } = await request.json();
 
-    // Validate input
     if (!cartItems || !Array.isArray(cartItems) || cartItems.length === 0) {
       return NextResponse.json(
         { success: false, error: 'Cart items are required' },
@@ -36,7 +35,72 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Check inventory for all items
+    const { data: existingOrder, error: checkError } = await supabase
+      .from('orders')
+      .select('id')
+      .eq('tx_hash', txHash)
+      .single();
+
+    if (existingOrder) {
+      const { data: completeOrder } = await supabase
+        .from('orders')
+        .select(`
+          *,
+          order_items (
+            quantity,
+            price_at_time,
+            products (
+              id,
+              name,
+              price,
+              image,
+              description,
+              category,
+              tags,
+              sizes,
+              colors,
+              in_stock,
+              featured,
+              inventory
+            )
+          )
+        `)
+        .eq('id', existingOrder.id)
+        .single();
+
+      const orderResponse = {
+        id: completeOrder.id,
+        userWallet: completeOrder.user_wallet,
+        items: completeOrder.order_items.map((item: any) => ({
+          product: {
+            id: item.products.id,
+            name: item.products.name,
+            price: parseFloat(item.products.price),
+            image: item.products.image,
+            description: item.products.description,
+            category: item.products.category,
+            tags: item.products.tags || [],
+            sizes: item.products.sizes || [],
+            colors: item.products.colors || [],
+            inStock: item.products.in_stock,
+            featured: item.products.featured,
+            inventory: item.products.inventory
+          },
+          quantity: item.quantity
+        })),
+        totalAmount: parseFloat(completeOrder.total_amount),
+        status: completeOrder.status,
+        txHash: completeOrder.tx_hash,
+        createdAt: new Date(completeOrder.created_at),
+        updatedAt: new Date(completeOrder.updated_at)
+      };
+
+      return NextResponse.json({
+        success: true,
+        data: { order: orderResponse }
+      } as ApiResponse<{ order: any }>);
+    }
+
     for (const item of cartItems) {
       const { data: product, error: productError } = await supabase
         .from('products')
@@ -68,7 +132,6 @@ export async function POST(request: NextRequest) {
     let userId: string;
 
     if (userError && userError.code === 'PGRST116') {
-      // User doesn't exist, create one
       const { data: newUser, error: createError } = await supabase
         .from('users')
         .insert([{ wallet_address: userWallet }])
@@ -85,7 +148,6 @@ export async function POST(request: NextRequest) {
       userId = user.id;
     }
 
-    // Start a transaction to ensure data consistency
     const { data: order, error: orderError } = await supabase
       .from('orders')
       .insert([{
@@ -102,7 +164,6 @@ export async function POST(request: NextRequest) {
       throw orderError;
     }
 
-    // Create order items and update inventory
     const orderItems = cartItems.map(item => ({
       order_id: order.id,
       product_id: item.product.id,
@@ -118,7 +179,6 @@ export async function POST(request: NextRequest) {
       throw itemsError;
     }
 
-    // Update inventory for each product
     for (const item of cartItems) {
       const { error: updateError } = await supabase.rpc('decrement_inventory', {
         product_id: item.product.id,
@@ -130,7 +190,6 @@ export async function POST(request: NextRequest) {
       }
     }
 
-    // Fetch the complete order with items for response
     const { data: completeOrder, error: fetchError } = await supabase
       .from('orders')
       .select(`

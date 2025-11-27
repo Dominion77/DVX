@@ -13,7 +13,6 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Check if user already exists
     const { data: existingUser, error: fetchError } = await supabase
       .from('users')
       .select('*')
@@ -27,7 +26,6 @@ export async function POST(request: NextRequest) {
     let user: User;
 
     if (existingUser) {
-      // User exists, return existing user
       user = {
         id: existingUser.id,
         walletAddress: existingUser.wallet_address,
@@ -35,7 +33,7 @@ export async function POST(request: NextRequest) {
         createdAt: new Date(existingUser.created_at)
       };
     } else {
-      // Create new user
+      
       const { data: newUser, error: createError } = await supabase
         .from('users')
         .insert([{ 

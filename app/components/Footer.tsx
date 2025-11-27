@@ -1,3 +1,5 @@
+'use client'
+
 import { FaFacebook, FaInstagram, FaPinterest } from 'react-icons/fa';
 import { FaXTwitter } from "react-icons/fa6";
 import { FiMapPin, FiClipboard, FiShield, FiHelpCircle, FiTruck, FiCreditCard } from 'react-icons/fi';
@@ -9,7 +11,6 @@ export default function Footer() {
     <footer className="bg-black text-white py-12">
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8">
-          {/* About Us */}
           <div>
             <h3 className="font-semibold mb-4 flex items-center gap-2">
               <FiHelpCircle className="w-5 h-5" />
@@ -20,7 +21,6 @@ export default function Footer() {
             </p>
           </div>
 
-          {/* Information */}
           <div>
             <h3 className="font-semibold mb-4 flex items-center gap-2">
               <FiClipboard className="w-5 h-5" />
@@ -42,7 +42,7 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Support */}
+          
           <div>
             <h3 className="font-semibold mb-4">Support</h3>
             <ul className="space-y-2 text-sm text-gray-400">
@@ -52,7 +52,7 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Help */}
+        
           <div>
             <h3 className="font-semibold mb-4">Help</h3>
             <ul className="space-y-2 text-sm text-gray-400">
@@ -63,7 +63,6 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Newsletter */}
           <div>
             <h3 className="font-semibold mb-4">Newsletter</h3>
             <div className="space-y-2">
@@ -80,7 +79,6 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* Social Icons */}
         <div className="flex justify-end gap-6 mt-8">
           <a href="#" className="hover:text-gray-300 transition-colors">
             <FaFacebook className="w-6 h-6" />
@@ -96,7 +94,6 @@ export default function Footer() {
           </a>
         </div>
 
-        {/* Copyright */}
         <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-500 text-sm">
           <p>All Right Reserved © {presentYear}, Lacozt</p>
         </div>

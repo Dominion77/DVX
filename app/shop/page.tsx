@@ -76,7 +76,7 @@ export default function Shop() {
       
       <div className="container mx-auto px-4 py-8">
         <div className="flex flex-col lg:flex-row gap-8">
-          {/* Filters Sidebar */}
+          
           <div className="lg:w-1/4">
             <div className="bg-white rounded-lg shadow-md p-6 sticky top-4">
               <div className="flex items-center gap-2 mb-6">
@@ -85,7 +85,7 @@ export default function Shop() {
               </div>
               
               <div className="space-y-6">
-                {/* Category Filter */}
+                
                 <div>
                   <label className="block text-sm font-medium mb-2">Category</label>
                   <select
@@ -101,7 +101,7 @@ export default function Shop() {
                   </select>
                 </div>
                 
-                {/* Price Range Filter */}
+                
                 <div>
                   <label className="block text-sm font-medium mb-2">Price Range</label>
                   <select
@@ -116,7 +116,7 @@ export default function Shop() {
                   </select>
                 </div>
                 
-                {/* In Stock Filter */}
+              
                 <div className="flex items-center">
                   <input
                     type="checkbox"
@@ -140,7 +140,7 @@ export default function Shop() {
             </div>
           </div>
 
-          {/* Products Grid */}
+          
           <div className="lg:w-3/4">
             <div className="flex justify-between items-center mb-6">
               <h1 className="text-3xl font-bold">All Products</h1>

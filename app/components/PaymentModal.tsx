@@ -1,13 +1,12 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useAccount, useWriteContract, useWaitForTransactionReceipt } from 'wagmi';
 import { USDC_CONTRACT, MERCHANT_WALLET, formatUSDCAmount } from '../lib/wagmi';
 import { CartItem } from '../types';
 import { FiX, FiCheck, FiAlertCircle } from 'react-icons/fi';
 import { parseGwei } from 'viem';
-import { generateOrderId } from '../lib/utils';
-import { baseSepolia } from 'viem/chains';
+import { baseSepolia } from 'wagmi/chains';
 
 interface PaymentModalProps {
   isOpen: boolean;
@@ -21,6 +20,7 @@ type PaymentStep = 'confirm' | 'processing' | 'success' | 'error';
 export default function PaymentModal({ isOpen, onClose, cartItems, totalAmount }: PaymentModalProps) {
   const [paymentStep, setPaymentStep] = useState<PaymentStep>('confirm');
   const [txHash, setTxHash] = useState<string>('');
+  const [errorMessage, setErrorMessage] = useState<string>('');
   
   const { address } = useAccount();
   const { writeContract, error } = useWriteContract();
@@ -28,6 +28,12 @@ export default function PaymentModal({ isOpen, onClose, cartItems, totalAmount }
   const { isLoading: isConfirming, isSuccess: isConfirmed } = useWaitForTransactionReceipt({
     hash: txHash as `0x${string}`,
   });
+
+  useEffect(() => {
+    if (isConfirmed && txHash && paymentStep === 'processing') {
+      processOrder(txHash);
+    }
+  }, [isConfirmed, txHash, paymentStep]);
 
   const handlePayment = async () => {
     if (!address) return;
@@ -41,19 +47,21 @@ export default function PaymentModal({ isOpen, onClose, cartItems, totalAmount }
       functionName: 'transfer',
       args: [MERCHANT_WALLET, usdcAmount],
       chainId: baseSepolia.id,
-      gasPrice: parseGwei("0.5"),
+      maxFeePerGas: parseGwei("0.5"),
+      maxPriorityFeePerGas: parseGwei("0.2"),
     }, {
       onSuccess: (hash) => {
         setTxHash(hash);
-        setTimeout(() => {
-          if (isConfirmed) {
-            setPaymentStep('success');
-            processOrder(hash);
-          }
-        }, 2000);
+        // setTimeout(() => {
+        //   if (isConfirmed) {
+        //     setPaymentStep('success');
+        //     processOrder(hash);
+        //   }
+        // }, 2000);
       },
       onError: (error) => {
         console.error('Payment failed:', error);
+        setErrorMessage(error.message || 'Transaction was rejected or failed');
         setPaymentStep('error');
       }
     });
@@ -84,8 +92,10 @@ export default function PaymentModal({ isOpen, onClose, cartItems, totalAmount }
       }
       
       setPaymentStep('success');
-    } catch (error) {
+    } catch (error: any) {
       console.error('Order processing failed:', error);
+      // setPaymentStep('error');
+      setErrorMessage(` Payment succeeded on blockchain!\n\nTransaction Hash: ${txHash}\n\nBut order processing failed: ${error.message}\n\nPlease contact support with this transaction hash.`);
       setPaymentStep('error');
     }
   };
@@ -95,6 +105,7 @@ export default function PaymentModal({ isOpen, onClose, cartItems, totalAmount }
     setTimeout(() => {
       setPaymentStep('confirm');
       setTxHash('');
+      setErrorMessage('');
     }, 300);
   };
 
@@ -150,7 +161,9 @@ export default function PaymentModal({ isOpen, onClose, cartItems, totalAmount }
           <div className="text-center py-8">
             <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500 mx-auto mb-4"></div>
             <p className="text-lg mb-2">Processing your payment...</p>
-            <p className="text-sm text-gray-600">Please wait while we confirm your transaction</p>
+            <p className="text-sm text-gray-600">
+              {isConfirming ? 'Waiting for confirmation...' : 'Please confirm in MetaMask'}
+            </p>
             {txHash && (
               <p className="text-xs text-gray-500 mt-2 break-all">
                 TX: {txHash.slice(0, 10)}...{txHash.slice(-8)}
@@ -180,23 +193,37 @@ export default function PaymentModal({ isOpen, onClose, cartItems, totalAmount }
             <div className="text-red-500 text-4xl mb-4">
               <FiAlertCircle className="mx-auto" />
             </div>
-            <h3 className="text-xl font-bold mb-2">Payment Failed</h3>
-            <p className="text-gray-600 mb-4">
-              {error?.message || 'There was an error processing your payment. Please try again.'}
+            <h3 className="text-xl font-bold mb-2">
+              {txHash ? 'Order Processing Failed' : 'Payment Failed'}
+            </h3>
+            <p className="text-gray-600 mb-4 whitespace-pre-line">
+              {errorMessage || error?.message || 'There was an error processing your payment. Please try again.'}
             </p>
+            {txHash && (
+              <a 
+                href={`https://sepolia.basescan.org/tx/${txHash}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-blue-500 hover:underline text-sm mb-4 block"
+              >
+                View Transaction on BaseScan
+              </a>
+            )}
             <div className="flex gap-3">
               <button
                 onClick={handleClose}
                 className="flex-1 py-3 border border-gray-300 rounded hover:bg-gray-50 transition-colors"
               >
-                Cancel
+                Close
               </button>
-              <button
-                onClick={() => setPaymentStep('confirm')}
-                className="flex-1 bg-blue-500 text-white py-3 rounded hover:bg-blue-600 transition-colors"
-              >
-                Try Again
-              </button>
+              {!txHash && (
+                <button
+                  onClick={() => setPaymentStep('confirm')}
+                  className="flex-1 bg-blue-500 text-white py-3 rounded hover:bg-blue-600 transition-colors"
+                >
+                  Try Again
+                </button>
+              )}
             </div>
           </div>
         )}
