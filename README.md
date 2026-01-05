@@ -45,6 +45,7 @@ Users connect their wallet, select clothing items, and pay in USDC on **Base Sep
   - Item pricing validation
   - Purchase event emission
 - **Blockchain**: Base Sepolia
+-  **Database**: postgreSQL(Supabase)
 - **Token**: USDC
 
 ---
